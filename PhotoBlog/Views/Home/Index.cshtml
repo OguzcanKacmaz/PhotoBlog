@@ -1,0 +1,39 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+    ViewBag.Search = Model.Search;
+}
+
+
+<div class="posts">
+    @if (!string.IsNullOrEmpty(Model.Search))
+    {
+        <h2 class="mb-3">Search Results for &ldquo;@Model.Search&rdquo;</h2>
+        <hr />
+    }
+
+    @foreach (var post in Model.Posts)
+    {
+        <div class="post">
+            <h3 class="post-title">@post.Title</h3>
+            <div class="post-image">
+                <img src="~/img/@post.Photo" alt="@post.Title" />
+            </div>
+            <div class="post-details">
+                <div class="post-tags">
+                    @foreach (var tag in post.Tags)
+                    {
+                        <a asp-route-q="#@tag.Name">#@tag.Name</a>
+                    }
+                </div>
+                <div class="post-time">
+                    <span data-post-time="@post.CreatedTime.ToString("s")"></span>
+                </div>
+            </div>
+            <p class="post-desc">
+                @post.Description
+            </p>
+        </div>
+    }
+</div>
+
